@@ -1,0 +1,125 @@
+/* Imagery and motion layer for the ProvDe site.
+   Product shots are SVG files animated with SMIL. Page motion below is decorative
+   and switches off for visitors who prefer reduced motion. */
+
+html,body { overflow-x:clip; }
+
+/* ---------- Product shots ---------- */
+.shot { margin:0; position:relative; isolation:isolate; }
+.shot img { width:100%; height:auto; border-radius:18px; background:#fff;
+  box-shadow:0 1px 2px #0739631a, 0 24px 60px -18px #07396347, 0 70px 120px -70px #006c8073; }
+.shot::before { content:""; position:absolute; z-index:-1; inset:-8% -5% -12%; pointer-events:none;
+  background:radial-gradient(42% 46% at 18% 22%, #8ce8e166, transparent 70%),
+             radial-gradient(40% 50% at 86% 78%, #26899b40, transparent 72%);
+  filter:blur(18px); }
+
+.shot-section { padding-block:24px 112px; }
+.shot-section .section-heading { margin-bottom:52px; }
+.product-shot { padding-bottom:100px; }
+.about-figure { margin-top:64px; }
+.about-figure img { box-shadow:none; background:transparent; border-radius:28px; }
+.about-figure::before { inset:-4% -3%; opacity:.7; }
+
+/* ---------- Ambient light ---------- */
+.hero,.page-hero { position:relative; isolation:isolate; }
+.hero::before,.page-hero::before { content:""; position:absolute; z-index:-1; inset:-10% 0 0; pointer-events:none;
+  background:radial-gradient(34% 44% at 88% 18%, #8ce8e14d, transparent 70%),
+             radial-gradient(30% 40% at 6% 92%, #26899b26, transparent 70%); }
+.section--ink { position:relative; isolation:isolate; overflow:hidden; }
+.section--ink::before { content:""; position:absolute; z-index:-1; inset:-35%; pointer-events:none;
+  background:radial-gradient(22% 30% at 28% 34%, #26b3c440, transparent 70%),
+             radial-gradient(24% 32% at 72% 66%, #8ce8e126, transparent 70%); }
+.section--ink::after { content:""; position:absolute; z-index:-1; inset:0; pointer-events:none; opacity:.35;
+  background-image:linear-gradient(#ffffff0d 1px, transparent 1px), linear-gradient(90deg, #ffffff0d 1px, transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(70% 80% at 50% 50%, #000, transparent);
+          mask-image:radial-gradient(70% 80% at 50% 50%, #000, transparent); }
+
+/* ---------- Highlights that can sweep in ---------- */
+.hero-visual mark,.example-card mark,.compare-grid mark {
+  background:linear-gradient(#ffe7a6,#ffe7a6) no-repeat 0 0 / 100% 100%; }
+.compare-grid mark.changed { background-image:linear-gradient(#fdd9cf,#fdd9cf); }
+.compare-grid mark.match { background-image:linear-gradient(#cdeedd,#cdeedd); }
+
+/* ---------- Small interactions ---------- */
+.button--primary { position:relative; overflow:hidden; }
+.button--primary::after { content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(105deg, transparent 35%, #ffffff40 50%, transparent 65%); transform:translateX(-120%); }
+.button--primary:hover::after { transform:translateX(120%); transition:transform .7s ease; }
+.site-header { transition:box-shadow .3s ease, background-color .3s ease; }
+.site-header.is-scrolled { box-shadow:0 10px 30px -12px #0739632e; }
+.value-columns article,.availability-list>div,.example-card,.workflow-list a { transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease; }
+.example-card:hover { transform:translateY(-4px); box-shadow:0 22px 44px -22px #07396340; }
+.value-columns article:hover { transform:translateY(-4px); }
+.workflow-list a:hover { transform:translateX(6px); }
+.glyph-change span,.glyph-change b { position:relative; text-decoration:none; border-bottom:0; }
+.glyph-change span::after,.glyph-change b::after { content:""; position:absolute; left:-2px; right:-2px; height:2px; background:currentColor; transform-origin:left; }
+.glyph-change span::after { top:54%; }
+.glyph-change b::after { bottom:-3px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:none; } }
+  @keyframes slide-in { from { opacity:0; transform:translateX(-26px); } to { opacity:1; transform:none; } }
+  @keyframes pop { 0% { opacity:0; transform:scale(.94) translateY(8px); } 70% { opacity:1; transform:scale(1.015); } 100% { opacity:1; transform:none; } }
+  @keyframes grow-y { from { transform:scaleY(0); } to { transform:none; } }
+  @keyframes sweep { from { background-size:0% 100%; } to { background-size:100% 100%; } }
+  @keyframes float { from { transform:translateY(0); } to { transform:translateY(-8px); } }
+  @keyframes ring { 0% { box-shadow:0 0 0 0 #e0a04070; } 80%,100% { box-shadow:0 0 0 10px #e0a04000; } }
+  @keyframes drift { from { transform:translate3d(0,0,0) rotate(0); } to { transform:translate3d(5%,-4%,0) rotate(6deg); } }
+  @keyframes glow { from { opacity:.75; transform:translate3d(0,0,0); } to { opacity:1; transform:translate3d(-2%,3%,0); } }
+  @keyframes swap { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+  /* Hero: text arrives, then the example plays: source -> rewrite -> what needs attention. */
+  .hero-copy>*,.page-hero .container>*,.product-hero>* { animation:rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-copy>*:nth-child(2),.page-hero .container>*:nth-child(2),.product-hero>*:nth-child(2) { animation-delay:.08s; }
+  .hero-copy>*:nth-child(3),.page-hero .container>*:nth-child(3),.product-hero>*:nth-child(3) { animation-delay:.16s; }
+  .hero-copy>*:nth-child(4),.page-hero .container>*:nth-child(4),.product-hero>*:nth-child(4) { animation-delay:.24s; }
+  .page-hero .container>.about-figure { animation-delay:.3s; }
+  .hero-visual { animation:rise 1s .15s cubic-bezier(.2,.7,.2,1) both, float 6s 2.6s ease-in-out infinite alternate; }
+  .hero-visual .visual-topline { animation:rise .6s .3s both; }
+  .hero-visual .source-slip { animation:slide-in .7s .45s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-visual .source-slip mark { animation:sweep .8s 2.1s cubic-bezier(.3,.6,.2,1) both; }
+  .hero-visual .visual-connector { animation:rise .5s .9s both; }
+  .hero-visual .visual-connector i { transform-origin:top; animation:grow-y .5s .95s both; }
+  .hero-visual .edit-slip { animation:rise .8s 1.2s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-visual .review-highlight { animation:pop .7s 1.9s cubic-bezier(.2,.7,.2,1) both; transform-origin:left center; }
+  .hero-visual .attention-icon { animation:ring 2s 2.6s ease-out infinite; }
+  .hero::before,.page-hero::before { animation:glow 12s ease-in-out infinite alternate; }
+  .section--ink::before { animation:drift 22s ease-in-out infinite alternate; }
+
+  @keyframes tilt-in { from { opacity:0; transform:perspective(1800px) rotateX(16deg) translateY(70px) scale(.94); } to { opacity:1; transform:none; } }
+
+  /* Scroll reveal: site.js adds .reveal only to content below the first screen. */
+  .reveal { opacity:0; }
+  .reveal.is-visible { opacity:1; animation:rise .9s var(--reveal-delay,0ms) cubic-bezier(.2,.7,.2,1) backwards; }
+  .shot { transform-origin:50% 0; }
+  .shot.reveal.is-visible { animation-name:tilt-in; animation-duration:1.4s; }
+  .product-shot .shot { animation:tilt-in 1.4s .35s cubic-bezier(.2,.7,.2,1) backwards; }
+  .example-card.reveal mark { background-size:0% 100%; transition:background-size .9s .55s cubic-bezier(.3,.6,.2,1); }
+  .example-card.reveal.is-visible mark { background-size:100% 100%; }
+  .reveal .glyph-change span::after,.reveal .glyph-change b::after { transform:scaleX(0); transition:transform .5s cubic-bezier(.3,.6,.2,1); }
+  .reveal.is-visible .glyph-change span::after { transform:none; transition-delay:.55s; }
+  .reveal.is-visible .glyph-change b::after { transform:none; transition-delay:.85s; }
+  .reveal .glyph-change b { opacity:.25; transition:opacity .4s .75s; }
+  .reveal.is-visible .glyph-change b { opacity:1; }
+
+  /* Product walkthrough: each example change animates in. */
+  .is-swapping #example-source,.is-swapping #example-edit { animation:swap .45s cubic-bezier(.2,.7,.2,1) both; }
+  .is-swapping #example-edit { animation-delay:.08s; }
+  .is-swapping .review-outcome { animation:pop .55s .16s cubic-bezier(.2,.7,.2,1) both; }
+  .is-swapping .compare-grid mark { animation:sweep .7s .3s cubic-bezier(.3,.6,.2,1) both; }
+}
+
+@media (max-width:850px) {
+  .shot-section { padding-block:8px 80px; }
+  .product-shot { padding-bottom:70px; }
+  .about-figure { margin-top:44px; }
+  .shot img { border-radius:12px; }
+}
+@media (max-width:600px) {
+  .shot-section { padding-block:0 60px; }
+  .product-shot { padding-bottom:52px; }
+  .about-figure { margin-top:34px; }
+  .shot img { border-radius:9px; }
+  .about-figure img { border-radius:18px; }
+}
